@@ -20,10 +20,13 @@
 
     --bg:var(--bg-1); --panel:var(--panel-1); --ink:var(--ink-1); --sub:var(--sub-1);
     --accent:var(--accent-1); --accentb:var(--accent-1b); --stainc:var(--stain-1);
+    /* 막이 바뀌어도 그대로인 색 — 접수증·말풍선·버튼, 바깥 배경 */
+    --ui-bg:#ffffff; --ui-ink:#222222; --ui-sub:#777777; --ui-line:#999999;
+    --page:#000000; --frame:#2b2b2b;
     color-scheme: light;
   }
   *{box-sizing:border-box;}
-  html,body{height:100%;margin:0;background:var(--bg);}
+  html,body{height:100%;margin:0;background:var(--page);}
   body{
     font-family:'Galmuri11',monospace;
     color:var(--ink);
@@ -45,8 +48,7 @@
     width:544px; height:416px;       /* 실제 크기는 fit() 이 배율에 맞춰 덮어씀 */
     flex:none;
     position:relative;
-    border:3px solid var(--ink);
-    box-shadow:6px 6px 0 rgba(0,0,0,0.18);
+    border:3px solid var(--frame);
     background:var(--panel);
     transition:background 1.4s ease, border-color 1.4s ease;
     overflow:hidden;
@@ -76,29 +78,29 @@
   /* ---- 말풍선 ---- */
   .bubble{
     position:absolute; left:16px; right:16px; bottom:66px;
-    background:var(--panel); border:2px solid var(--ink);
+    background:var(--ui-bg); color:var(--ui-ink); border:2px solid var(--ui-ink);
     padding:10px 13px; font-size:13px; min-height:56px;
     box-shadow:3px 3px 0 rgba(0,0,0,0.25);
   }
-  .bubble .who{display:block;font-size:10px;color:var(--sub);margin-bottom:3px;}
+  .bubble .who{display:block;font-size:10px;color:var(--ui-sub);margin-bottom:3px;}
   .bubble .txt::after{content:'▌';animation:blink 1s steps(1) infinite;opacity:.6;}
   .bubble.done .txt::after{content:'';}
   .bubble .tail{
     position:absolute;top:-10px;left:248px;width:0;height:0;
     border-left:8px solid transparent;border-right:8px solid transparent;
-    border-bottom:10px solid var(--ink);
+    border-bottom:10px solid var(--ui-ink);
   }
   .bubble .tail i{
     display:block;position:absolute;top:3px;left:-6px;width:0;height:0;
     border-left:6px solid transparent;border-right:6px solid transparent;
-    border-bottom:9px solid var(--panel);
+    border-bottom:9px solid var(--ui-bg);
   }
   @keyframes blink{50%{opacity:0}}
 
   /* ---- 접수증 ---- */
   .slip{
     position:absolute; top:0; left:18px; width:268px;
-    background:#f4efe4; color:#2a2320; border:2px solid #2a2320;
+    background:var(--ui-bg); color:var(--ui-ink); border:2px solid var(--ui-ink);
     padding:9px 12px; font-size:11px; line-height:1.55;
     box-shadow:0 5px 0 rgba(0,0,0,0.22);
     transform:translateY(-160%) rotate(-1.8deg);
@@ -108,11 +110,11 @@
   .slip.in{transform:translateY(14px) rotate(-1.8deg);}
   .slip.pinned{width:232px;transform:translateY(10px) rotate(-1.8deg);transition:none;}
   .slip .head{
-    font-size:9px;letter-spacing:3px;color:#6b5d4c;
-    border-bottom:1px dashed #6b5d4c;padding-bottom:4px;margin-bottom:5px;
+    font-size:9px;letter-spacing:3px;color:var(--ui-sub);
+    border-bottom:1px dashed var(--ui-line);padding-bottom:4px;margin-bottom:5px;
   }
   .slip .row{display:flex;justify-content:space-between;gap:10px;margin:2px 0;}
-  .slip .row span{color:#6b5d4c;}
+  .slip .row span{color:var(--ui-sub);}
 
   /* ---- 거절했을 때 손님의 말 ---- */
   .refuse{
@@ -156,11 +158,11 @@
   .slip.own.in{transform:translate(-50%,104px) rotate(-1.2deg);}
   .slip.own .row{align-items:center;margin:4px 0;}
   .slip.own input{
-    font-family:inherit;font-size:12px;color:#2a2320;
+    font-family:inherit;font-size:12px;color:var(--ui-ink);
     width:240px;text-align:right;padding:2px 0;
-    background:transparent;border:none;border-bottom:1px dashed #6b5d4c;outline:none;
+    background:transparent;border:none;border-bottom:1px dashed var(--ui-line);outline:none;
   }
-  .slip.own input:focus{border-bottom-color:#2a2320;}
+  .slip.own input:focus{border-bottom-color:var(--ui-ink);}
   .ownhint{position:absolute;left:0;right:0;bottom:70px;text-align:center;
     font-size:10px;color:#847b73;z-index:4;}
   .list .mine{color:#e4ddd2;}
@@ -192,14 +194,14 @@
   .washbox .actions{position:static;left:auto;right:auto;bottom:auto;}   /* 너비는 위 .washbox 규칙이 정함 */
   button{
     font-family:inherit;font-size:12px;padding:11px 12px;
-    border:2px solid var(--ink);background:var(--accentb);color:var(--ink-1);
+    border:2px solid var(--ui-ink);background:var(--ui-bg);color:var(--ui-ink);
     cursor:pointer;flex:1;
-    transition:transform .08s ease, background 1.2s ease, color 1.2s ease;
+    transition:transform .08s ease;
   }
-  body[data-act="2"] button, body[data-act="3"] button, body[data-act="end"] button{color:var(--ink);}
   button:active{transform:translateY(2px);}
   button:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
-  button.ghost{background:var(--panel);color:var(--ink);}
+  button.ghost{background:var(--ui-bg);color:var(--ui-ink);}
+  button.refuse-btn{background:#b3261e;color:#ffffff;border-color:var(--ui-ink);}
   button:disabled{opacity:.35;cursor:default;}
 
   /* ---- 전체화면 텍스트 ---- */
@@ -297,7 +299,6 @@
     frameEl.style.width       = (544 * s) + 'px';
     frameEl.style.height      = (416 * s) + 'px';
     frameEl.style.borderWidth = b + 'px';
-    frameEl.style.boxShadow   = (b*2) + 'px ' + (b*2) + 'px 0 rgba(0,0,0,0.18)';
     stageEl.style.transform   = 'scale(' + s + ')';
   }
   window.addEventListener('resize', fit);
@@ -670,7 +671,7 @@
         '<span class="who">손님</span><span class="txt" id="bubTxt"></span>'+
       '</div>'+
       '<div class="actions" id="acts" style="opacity:0;pointer-events:none;">'+
-        (canRefuse ? '<button id="refuseBtn" class="ghost">거절하기</button>' : '')+
+        (canRefuse ? '<button id="refuseBtn" class="refuse-btn">거절하기</button>' : '')+
         '<button id="acceptBtn">세탁 시작</button>'+
       '</div>'
     );
