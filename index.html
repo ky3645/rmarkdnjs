@@ -373,7 +373,7 @@
       cust:{coat:"#5d7fa6",coat2:"#49678a",hair:"#2f2a26",skin:"#e6c8a8"} },
 
     { id:"bear", act:1, name:"낡은 곰인형", request:"세탁", note:"꼬질꼬질하고 얼룩덜룩하다.",
-      open:"딸아이가 매일 안고 자는 인형인데, 너무 꼬질꼬질해져서요.",
+      open:"딸아이가 매일 안고 자는 인형인데, 너무 더러워져서요.",
       close:"고맙습니다. 아이가 좋아하겠어요.",
       shape:"bear", stainColor:"stain", stains:34,
       cust:{coat:"#c9718a",coat2:"#a85a72",hair:"#6b4a34",skin:"#f0d3b4"} },
@@ -391,7 +391,7 @@
       shape:"shirt", stainColor:"blood", stains:46,
       cust:{coat:"#4a4f58",coat2:"#393e45",hair:"#1f1c1a",skin:"#d8bb9c"} },
 
-    { id:"cash", act:2, name:"현금 다발", request:"펴서 정리", note:"구깃구깃하고 축축하다.",
+    { id:"cash", act:2, name:"현금 다발", request:"깨끗하게", note:"구깃구깃하고 축축하다.",
       open:"이 돈 좀 깨끗하게 해주실 수 있어요? 만질 때마다 손이 더러워지는 것 같아서요.",
       close:"이제 그냥 돈이었으면 좋겠어요.",
       refuse:"받으면 없던 일로 하기로 했거든요.\n근데 아무리 해도 없던 일이 안 돼요.",
@@ -410,16 +410,16 @@
       close:"고맙습니다. 이제 아무 일도 없었던 거예요.",
       refuse:"눈 감는 게 무서워서 석 달째 못 잤어요.\n이대로는 더 못 버티겠어서 온 건데.",
       shape:"brain", stainColor:"stain", stains:60,
-      memwords:["왜 하필 나야","내 잘못이 아니야","아직도 그 목소리가","괜찮은 척했어","잊으면 돼","어쩔 수 없었어"],
-      cust:{coat:"#2a2320",coat2:"#1e1916",hair:"#121010",skin:"#6b5a4e",eye:"#0a0808"} },
+      memwords:["왜 하필 나야","내 잘못이 아니야","아직도 그 목소리가","괜찮은 척했어","그 사람은 잘 살고 있대","잊으면 돼","어쩔 수 없었어"],
+      cust:{coat:"#5a5550",coat2:"#47433f",hair:"#2a2522",skin:"#c9b09a",eye:"#2a2320"} },
 
-    { id:"eye", act:3, name:"눈", request:"목격 제거", note:"눈동자가 흔들린다.",
+    { id:"eye", act:3, name:"눈", request:"본 것 지우기", note:"눈동자가 흔들린다.",
       open:"너무 많은 걸 봐버렸어요. 예전처럼 깨끗하게 만들어 주세요.",
       close:"고맙습니다. 이제 아무 일도 없었던 거예요.",
       refuse:"눈을 감으면 더 또렷해져요.\n그냥 아무것도 모르던 때로 돌아가고 싶었어요.",
       shape:"eye", stainColor:"blood", stains:60,
       memwords:["보지 마","아무도 안 왔어","그 얼굴이 계속 보여","도와달라고 했는데","못 본 척했어"],
-      cust:{coat:"#241f22",coat2:"#1a1618",hair:"#100e0f",skin:"#665549",eye:"#0a0808"} },
+      cust:{coat:"#5d6670",coat2:"#4a525b",hair:"#3a2f28",skin:"#d0b8a2",eye:"#2a2320"} },
 
     { id:"heart", act:3, name:"심장", request:"원래대로", note:"아직 뛰고 있다.",
       open:"이게… 더러워졌어요. 원래대로 돌려주실 수 있나요?",
@@ -427,7 +427,7 @@
       refuse:"이걸 들고 갈 데가 여기밖에 없었어요.\n저도 제가 이렇게 된 게 싫어요.",
       shape:"heart", stainColor:"blood", stains:70,
       memwords:["더러워진 건 나야","내가 뭘 잘못했는데","그때 왜 가만히 있었지","용서 못 해","용서받고 싶어"],
-      cust:{coat:"#20191a",coat2:"#171112",hair:"#0e0c0c",skin:"#5f4f46",eye:"#0a0808"} }
+      cust:{coat:"#6a5a5c",coat2:"#554849",hair:"#241f1d",skin:"#c4aa94",eye:"#2a2320"} }
   ];
 
   var STAIN_COLORS = {
@@ -630,7 +630,7 @@
 
   // ---------- 막 전환 ----------
   function actTransitionText(fromAct, toAct){
-    if(fromAct===1 && toAct===2) return "일이 손에 익었다.\n\n단골이 생겼고, 그들은 점점 이상한 것을 맡기기 시작했다.";
+    if(fromAct===1 && toAct===2) return "일이 손에 익었다.\n\n그리고 손님들은 점점 이상한 것을 맡기기 시작했다.";
     if(fromAct===2 && toAct===3) return "언제부턴가 거절하는 법을 잊었다.\n\n그리고 어느 날부터,\n손님들은 더 이상 '옷'을 가져오지 않았다.";
     return "";
   }
@@ -896,7 +896,7 @@
     );
     document.getElementById('yesBtn').onclick = showOwnSlip;
     document.getElementById('noBtn').onclick  = function(){
-      endCard("손을 씻었다.<br>몇 번을 씻어도, 냄새가 빠지지 않는다.");
+      endCard("손을 씻었다.<br>오늘 만진 것들이 손끝에 남아 있다.");
     };
   }
 
