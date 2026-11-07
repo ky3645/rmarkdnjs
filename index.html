@@ -25,7 +25,7 @@
     --page:#000000; --frame:#2b2b2b;
     color-scheme: light;
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}   /* 모바일 터치 시 파란 번쩍임 끄기 */
   html,body{height:100%;margin:0;background:var(--page);}
   body{
     font-family:'Galmuri11',monospace;
@@ -54,6 +54,9 @@
     overflow:hidden;
   }
   .stage{
+    -webkit-user-select:none; user-select:none;    /* 연타해도 글자가 파랗게 선택되지 않게 */
+    -webkit-touch-callout:none;                    /* 길게 눌러도 메뉴가 안 뜨게 */
+    touch-action:manipulation;                     /* 두 번 탭해서 확대되는 것 막기 */
     position:absolute; top:0; left:0;
     width:544px; height:416px;
     transform-origin:top left;
@@ -158,6 +161,7 @@
   .slip.own.in{transform:translate(-50%,104px) rotate(-1.2deg);}
   .slip.own .row{align-items:center;margin:4px 0;}
   .slip.own input{
+    -webkit-user-select:text; user-select:text;    /* 입력칸만은 글자 입력·선택 가능하게 */
     font-family:inherit;font-size:12px;color:var(--ui-ink);
     width:240px;text-align:right;padding:2px 0;
     background:transparent;border:none;border-bottom:1px dashed var(--ui-line);outline:none;
