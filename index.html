@@ -41,8 +41,9 @@
 
   /* ===== 544 x 416 고정 스테이지 (RPG Maker VX Ace 해상도) ===== */
   .frame{
-    width:100%; max-width:544px;
-    aspect-ratio:544 / 416;
+    box-sizing:content-box;          /* 테두리 바깥에 붙여서 안쪽은 정확히 544x416 x 배율 */
+    width:544px; height:416px;       /* 실제 크기는 fit() 이 배율에 맞춰 덮어씀 */
+    flex:none;
     position:relative;
     border:3px solid var(--ink);
     box-shadow:6px 6px 0 rgba(0,0,0,0.18);
@@ -277,8 +278,26 @@
      ===================================================================== */
   var frameEl = document.getElementById('frame');
   var stageEl = document.getElementById('stageEl');
+
+  // true  : 2배·3배처럼 정수배로만 키움 → 도트가 모두 같은 크기로 또렷함 (권장)
+  // false : 화면에 꽉 차게 키움 → 더 크지만 도트 굵기가 조금씩 들쭉날쭉해질 수 있음
+  var PIXEL_PERFECT = true;
+  var SCALE = 1;
+
   function fit(){
-    stageEl.style.transform = 'scale(' + (frameEl.clientWidth / 544) + ')';
+    var room = 24;                                   // 화면 가장자리 여백
+    var s = Math.min((window.innerWidth  - room) / 544,
+                     (window.innerHeight - room) / 416);
+    if(PIXEL_PERFECT && s >= 1) s = Math.floor(s);   // 정수배로 내림
+    s = Math.max(s, 0.3);                            // 아주 작은 창에서도 최소 크기 유지
+    SCALE = s;
+
+    var b = Math.max(2, Math.round(3 * s));          // 테두리·그림자도 같은 비율로
+    frameEl.style.width       = (544 * s) + 'px';
+    frameEl.style.height      = (416 * s) + 'px';
+    frameEl.style.borderWidth = b + 'px';
+    frameEl.style.boxShadow   = (b*2) + 'px ' + (b*2) + 'px 0 rgba(0,0,0,0.18)';
+    stageEl.style.transform   = 'scale(' + s + ')';
   }
   window.addEventListener('resize', fit);
   fit();
@@ -760,8 +779,9 @@
       span.textContent = item.memwords[Math.floor(Math.random()*item.memwords.length)];
       var wrap = document.getElementById('stageWrap');
       var rect = canvas.getBoundingClientRect(), wrapRect = wrap.getBoundingClientRect();
-      span.style.left = ((x/64)*rect.width + (rect.left-wrapRect.left)) + 'px';
-      span.style.top  = ((y/64)*rect.height + (rect.top-wrapRect.top)) + 'px';
+      // 화면 좌표 → 스테이지 내부 좌표 (배율만큼 나눠줌)
+      span.style.left = (((x/64)*rect.width + (rect.left-wrapRect.left)) / SCALE) + 'px';
+      span.style.top  = (((y/64)*rect.height + (rect.top-wrapRect.top)) / SCALE) + 'px';
       wrap.appendChild(span);
       requestAnimationFrame(function(){ span.classList.add('show'); });
       setTimeout(function(){
